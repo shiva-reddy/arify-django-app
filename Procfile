@@ -1,1 +1,1 @@
-web: gunicorn arifyherokuapp.wsgi --log-file -
+web: gunicorn arify_backend.wsgi --log-file -
