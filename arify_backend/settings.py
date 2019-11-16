@@ -26,7 +26,7 @@ SECRET_KEY = '+lgwnsymt-3g=s6e0pyd3_h*=()#(80+htxrnaxp%3v&n6#rx2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arifyheroku.herokuapp.com']
+ALLOWED_HOSTS = ['arifyheroku.herokuapp.com','localhost']
 
 
 # Application definition
@@ -130,7 +130,7 @@ STATICFILES_DIRS = (
 )
 
 #  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.django.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
