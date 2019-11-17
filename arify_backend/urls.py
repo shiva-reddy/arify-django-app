@@ -21,5 +21,7 @@ from arify_app import views
 urlpatterns = [
 
     path('', views.index, name='index'),
+    path('add_scene/', views.add_scene, name='add_scene'),
+    path('add_ar_object/', views.add_ar_object, name='add_ar_object'),
     path('admin/', admin.site.urls),
 ]

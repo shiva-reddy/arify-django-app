@@ -26,7 +26,7 @@ SECRET_KEY = '+lgwnsymt-3g=s6e0pyd3_h*=()#(80+htxrnaxp%3v&n6#rx2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arifyheroku.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['arifyheroku.herokuapp.com','localhost','127.0.0.1']
 
 
 # Application definition
