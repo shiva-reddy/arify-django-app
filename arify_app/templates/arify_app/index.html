@@ -1,0 +1,92 @@
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    </br>
+    </br>
+    <div id="add_scene_form">
+        <form class="form-horizontal">
+            <fieldset>
+
+            <!-- Form Name -->
+            <legend>Create a new scene</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="textinput">Scene name</label>
+              <div class="col-md-4">
+              <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
+              <span class="help-block">help text here</span>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="add_object_button"></label>
+              <div class="col-md-4">
+                <button id="add_scene_button" name="add_scene_button" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+
+            </fieldset>
+        </form>
+     </div>
+
+  <div id="add_object_form">
+    <form class="form-horizontal">
+        <fieldset>
+
+        <!-- Form Name -->
+        <legend>Upload an AR object to scene's list</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">A unique name for the AR object</label>
+          <div class="col-md-4">
+          <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md">
+          <span class="help-block">help text here</span>
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="selectbasic">Choose the scene</label>
+          <div class="col-md-4">
+            <select id="selectbasic" name="selectbasic" class="form-control">
+                {% for s in scenes_list %}
+                    <option value="{{s}}">{{s}}</option>
+                {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <!-- File Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="filebutton">Upload AR object</label>
+          <div class="col-md-4">
+            <input id="filebutton" name="filebutton" class="input-file" type="file">
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="add_object_button"></label>
+          <div class="col-md-4">
+            <button id="add_object_button" name="add_object_button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+
+        </fieldset>
+        </form>
+  </div>
+</body>
+</html>
