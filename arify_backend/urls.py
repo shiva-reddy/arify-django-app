@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path
 
 from arify_app import views
+from arify_app.views import scenes_list, scene_links
 
 urlpatterns = [
 
     path('', views.index, name='index'),
     path('add_scene/', views.add_scene, name='add_scene'),
+    path("scenes/", scenes_list, name="scenes_list"),
+    path("scenes/<str:pk>/", scene_links, name="scene_links"),
     path('add_ar_object/', views.add_ar_object, name='add_ar_object'),
     path('admin/', admin.site.urls),
 ]
