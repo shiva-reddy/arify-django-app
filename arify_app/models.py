@@ -8,7 +8,7 @@ class Scene(models.Model):
         return self.name
 
     def add_scene(scene_name):
-        s = Scene(name="scene_name")
+        s = Scene(name=scene_name)
         s.save()
 
 class Ar_object(models.Model):
