@@ -42,32 +42,23 @@ def download_file(uploaded_file):
 
 def add_ar_object(request):
     if request.method == "POST":
-        file_name = request.FILES['file'].name
-        downloaded_file_path = download_file(request.FILES['file'])
-        print("Downloaded file to " + downloaded_file_path)
-        aws_path = settings.ENV + "/ar_objects/" + file_name
-        print("Uploading to AWS s3 at " + aws_path)
-        upload_to_aws(downloaded_file_path, settings.BUCKET_NAME, aws_path)
-
-        # chosen_scene = request.POST.get('chosen_scene')
-        # object_name = request.POST.get('object_name')
-        # used_object_names = list(map(lambda s: s.name, Ar_object.objects.filter(scene__name = chosen_scene)))
-        # if object_name not in used_object_names:
-        #     object_file = request.POST.get('file')
-        #     print(type(object_file))
-        #     print(object_file)
-        #     file_link = upload_file("ar_objects", object_file)
-        #     Ar_object.add_object(chosen_scene, object_name, file_link)
-        #     print("here")
+        chosen_scene = request.POST.get('chosen_scene')
+        object_name = request.POST.get('object_name')
+        used_object_names = list(map(lambda s: s.name, Ar_object.objects.filter(scene__name = chosen_scene)))
+        if object_name not in used_object_names:
+            file_link = upload_file("/ar_objects/", request)
+            Ar_object.add_object(chosen_scene, object_name, file_link)
     return HttpResponseRedirect("/")
 
 
-def upload_file(folder, file):
-    env = "dev/"
-    path = env + folder
-    # link = upload_to_aws(file, path, file)
-    link ="https://www.google.com"
-    return link
+def upload_file(folder, request):
+    file_name = request.FILES['file'].name
+    downloaded_file_path = download_file(request.FILES['file'])
+    print("Downloaded file to " + downloaded_file_path)
+    aws_path = os.environ['env'] + folder + file_name
+    print("Uploading to AWS s3 at " + aws_path)
+    return upload_to_aws(downloaded_file_path, settings.BUCKET_NAME, aws_path)
+
 
 def list_ar_objects(request, pk):
     data = {"results": list(map(lambda ar_object: {"name": ar_object.name, "link": ar_object.link}, Ar_object.objects.filter(scene__name=pk)))}
