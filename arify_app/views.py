@@ -7,6 +7,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 
 from arify_app.FileUploadDownloadUtil import upload_to_aws
 from arify_app.forms import SceneNameForm, ARObjectForm, UploadForm
@@ -68,34 +69,41 @@ def list_image_targets(request, pk):
     data = {"results": list(map(lambda image_target: {"name": image_target.name, "link": image_target.link}, Image_target.objects.filter(scene__name=pk)))}
     return JsonResponse(data)
 
-def upload_image(request, pk):
-    image = get_file_from_request(request)
+def upload_image_ui(request):
     _name = request.POST.get('image_name')
-    _scene = Scene.objects.filter(name=pk)
+    _scene = request.POST.get('chosen_scene')
+    upload_image(request, _name, _scene)
+    return HttpResponseRedirect("/")
 
-    if len(_scene) == 0:
-        return error_json("Scene is not present")
-
-    used_image_target_names = list(map(lambda s: s.name, Image_target.objects.filter(scene__name = pk)))
+def upload_image(request, _name, _scene_name):
+    used_image_target_names = list(map(lambda s: s.name, Image_target.objects.filter(scene__name = _scene_name)))
+    _scene = Scene.objects.filter(name=_scene_name)[0]
     if _name in used_image_target_names:
         return error_json("Name is already used for current scene")
-
-    _link = upload_file("image_targets",image)
-    # _link = "https://www.google.com"
-
-    image_target = Image_target(name = _name, scene=_scene[0],link=_link)
+    file_link = upload_file("/image_targets/", request)
+    image_target = Image_target(name = _name, scene=_scene, link=file_link)
     image_target.save()
+
+
+@csrf_exempt
+def upload_image_api(request, pk):
+    _name = request.POST.get('image_name')
+    _scene = Scene.objects.filter(name=pk)
+    if len(_scene) == 0:
+        return error_json("Scene is not present")
+    upload_image(request, _name, _scene[0])
     return success()
 
+@csrf_exempt
 def link_image_with_ar_object(request, pk):
     _image_name = request.POST.get('image_name')
     _object_name = request.POST.get('ar_object_name')
     _scene = Scene.objects.filter(name=pk)
     if len(_scene) == 0:
         return error_json("Scene is not present")
-    _image_target = Image_target.objects.filter(name=_image_name)
-    _ar_object = Ar_object.objects.filter(name=_object_name)
-    image_target_ar_object = Image_target_ar_object(scene = _scene, image_target = _image_target, ar_object=_ar_object)
+    _image_target = Image_target.objects.filter(name=_image_name)[0]
+    _ar_object = Ar_object.objects.filter(name=_object_name)[0]
+    image_target_ar_object = Image_target_ar_object(scene = _scene[0], image_target = _image_target, ar_object=_ar_object)
     image_target_ar_object.save()
     return success()
 

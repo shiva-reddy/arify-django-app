@@ -91,10 +91,54 @@
         </fieldset>
     </form>
   </div>
-<!--    <form action="/upload/" method="post" enctype="multipart/form-data">-->
-<!--        {% csrf_token %}-->
-<!--        {{ upload_form }}-->
-<!--        <input type="submit" value="Submit">-->
-<!--    </form>-->
+
+    <div id="add_image_form">
+        <form class="form-horizontal" action="upload_image/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+
+            <!-- Form Name -->
+            <legend>Upload an image target to a scene's list</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="id_object_name">A unique name for the image target</label>
+              <div class="col-md-4">
+              <input id="id_image_target_name" name="image_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_image_target_name">
+              <span class="help-block">help text here</span>
+              </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="id_chosen_scene">Choose the scene</label>
+              <div class="col-md-4">
+                <select id="id_chosen_scene_2" name="chosen_scene" class="form-control">
+                    {% for s in scenes_list %}
+                        <option value="{{s}}">{{s}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <!-- File Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="id_file">Upload Image target</label>
+              <div class="col-md-4">
+                <input id="id_file_2" name="file" class="input-file" type="file" required id="id_file_2">
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="add_image_button"></label>
+              <div class="col-md-4">
+                <button id="add_image_button" name="file" class="btn btn-primary" type="submit" formmethod="post" >Submit</button>
+              </div>
+            </div>
+
+            </fieldset>
+        </form>
+  </div>
 </body>
 </html>
