@@ -47,14 +47,29 @@ def add_ar_object(request):
         object_name = request.POST.get('object_name')
         used_object_names = list(map(lambda s: s.name, Ar_object.objects.filter(scene__name = chosen_scene)))
         if object_name not in used_object_names:
-            file_link = upload_file("/ar_objects/", request)
-            Ar_object.add_object(chosen_scene, object_name, file_link)
+            file_link = upload_file("/ar_objects/", request, 'file')
+            obj_type = request.POST.get('object_type')
+            mtl_file = None
+            try:
+                mtl_file = upload_file("/ar_objects/", request)
+            except:
+                mtl_file = None
+            scale_x = getOrDefault(request.POST.get('scale_x'), 1.0)
+            scale_y = getOrDefault(request.POST.get('scale_y'), 1.0)
+            scale_z = getOrDefault(request.POST.get('scale_z'), 1.0)
+            rot_x = getOrDefault(request.POST.get('rot_x'), 0.0)
+            rot_y = getOrDefault(request.POST.get('rot_y'), 0.0)
+            rot_z = getOrDefault(request.POST.get('rot_z'), 0.0)
+
+            Ar_object.add_object(chosen_scene, object_name, file_link,mtl_file,obj_type, scale_x, scale_y, scale_z, rot_x, rot_y, rot_z)
     return HttpResponseRedirect("/")
 
+def getOrDefault(value, defValue):
+    return defValue if (value == "") else value
 
-def upload_file(folder, request):
-    file_name = request.FILES['file'].name
-    downloaded_file_path = download_file(request.FILES['file'])
+def upload_file(folder, request, key):
+    file_name = request.FILES[key].name
+    downloaded_file_path = download_file(request.FILES[key])
     print("Downloaded file to " + downloaded_file_path)
     aws_path = os.environ['env'] + folder + file_name
     print("Uploading to AWS s3 at " + aws_path)
@@ -80,7 +95,7 @@ def upload_image(request, _name, _scene_name):
     _scene = Scene.objects.filter(name=_scene_name)[0]
     if _name in used_image_target_names:
         return error_json("Name is already used for current scene")
-    file_link = upload_file("/image_targets/", request)
+    file_link = upload_file("/image_targets/", request, 'file')
     image_target = Image_target(name = _name, scene=_scene, link=file_link)
     image_target.save()
 
@@ -132,5 +147,14 @@ def link_json(link):
     image_target_link = link.image_target.link
     ar_object_link = link.ar_object.link
     image_target = {"name": link.image_target.name, "link":image_target_link}
-    ar_object = {"name": link.ar_object.name, "link": ar_object_link}
+    ar_object = {"name": link.ar_object.name, "link": ar_object_link,
+                 "scale_x" : link.ar_object.scale_x,
+                 "scale_y": link.ar_object.scale_y,
+                 "model_type": link.ar_object.model_type,
+                 "mtl_link": link.mtl_link,
+                 "scale_z": link.ar_object.scale_z,
+                 "rot_x": link.ar_object.rot_x,
+                 "rot_y": link.ar_object.rot_y,
+                 "rot_z": link.ar_object.rot_z,
+                 }
     return {"image_target": image_target, "ar_object": ar_object}

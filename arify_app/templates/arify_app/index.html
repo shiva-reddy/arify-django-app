@@ -80,6 +80,61 @@
           </div>
         </div>
 
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="id_chosen_scene">Object type</label>
+          <div class="col-md-4">
+            <select id="id_object_type" name="object_type" class="form-control">
+                <option value="OBJ">OBJ</option>
+                <option value="GLB">GLB</option>
+                <option value="GLTF">GLTF</option>
+                <option value="FBX">FBX</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- File Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="id_mtl_file">Upload the texture file (for obj type objects only!!)</label>
+          <div class="col-md-4">
+            <input id="id_mtl_file" name="mtl_file" class="input-file" type="file">
+          </div>
+        </div>
+
+        <!-- Scale values-->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Scale values</label>
+          <div class="col-md-4">
+              <div class="col-md-3">
+                    <input name="scale_x" type="text" placeholder="x" class="form-control input-md">
+              </div>
+              <div class="col-md-3">
+                    <input name="scale_y" type="text" placeholder="y" class="form-control input-md">
+              </div>
+              <div class="col-md-3">
+                    <input name="scale_z" type="text" placeholder="z" class="form-control input-md">
+              </div>
+            <span class="help-block">help text here</span>
+          </div>
+        </div>
+
+        <!-- Rotation values-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" >Rotation values</label>
+          <div class="col-md-4">
+              <div class="col-md-3">
+                    <input name="rot_x" type="text" placeholder="x" class="form-control input-md">
+              </div>
+              <div class="col-md-3">
+                    <input name="rot_y" type="text" placeholder="y" class="form-control input-md">
+              </div>
+              <div class="col-md-3">
+                    <input name="rot_z" type="text" placeholder="z" class="form-control input-md">
+              </div>
+            <span class="help-block">help text here</span>
+          </div>
+        </div>
+
         <!-- Button -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="add_object_button"></label>
