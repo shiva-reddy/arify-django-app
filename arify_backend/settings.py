@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 
 # Extra lookup directories for collectstatic to find static files
 STATICFILES_DIRS = (
-    STATIC_ROOT,
+    os.path.join(BASE_DIR, 'arify_app/templates'),
 )
 
 #  Add configuration for static files storage using whitenoise
