@@ -11,189 +11,191 @@
 </head>
 <body>
 
-    </br>
-    </br>
-    <div id="add_scene_form">
+    <div style="margin-left: 100px">
+        </br>
+        </br>
+                <div id="add_scene_form" style="margin-top: 40px">
 
-        <form class="form-horizontal" action="add_scene/" method="post">
-            {% csrf_token %}
-            <fieldset>
+                    <form class="form-horizontal" action="add_scene/" method="post">
+                        {% csrf_token %}
+                        <fieldset>
 
-            <!-- Form Name -->
-            <legend>Create a new scene</legend>
+                        <!-- Form Name -->
+                            <legend><b>Create a new scene</b></legend>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="id_scene_name">Scene name</label>
-              <div class="col-md-4">
-                <input id="id_scene_name" name="scene_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_scene_name">
-              <span class="help-block">help text here</span>
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="id_scene_name">Scene name</label>
+                          <div class="col-md-4">
+                            <input id="id_scene_name" name="scene_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_scene_name">
+                          <span class="help-block">help text here</span>
+                          </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="add_object_button"></label>
+                          <div class="col-md-4">
+                            <button id="add_scene_button" name="add_scene_button" class="btn btn-primary" type="submit" formmethod="post">Submit</button>
+                          </div>
+                        </div>
+
+                        </fieldset>
+                    </form>
+                 </div>
+
+              <div id="add_object_form" style="margin-top: 40px">
+                <form class="form-horizontal" action="add_ar_object/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset>
+
+                    <!-- Form Name -->
+                        <legend><b>Upload an AR object to scene's list</b></legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="id_object_name">A unique name for the AR object</label>
+                      <div class="col-md-4">
+                      <input id="id_object_name" name="object_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_object_name">
+                      <span class="help-block">help text here</span>
+                      </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="id_chosen_scene">Choose the scene</label>
+                      <div class="col-md-4">
+                        <select id="id_chosen_scene" name="chosen_scene" class="form-control">
+                            {% for s in scenes_list %}
+                                <option value="{{s}}">{{s}}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- File Button -->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="id_file">Upload AR object</label>
+                      <div class="col-md-4">
+                        <input id="id_file" name="file" class="input-file" type="file" required id="id_file">
+                      </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="id_chosen_scene">Object type</label>
+                      <div class="col-md-4">
+                        <select id="id_object_type" name="object_type" class="form-control">
+                            <option value="OBJ">OBJ</option>
+                            <option value="GLB">GLB</option>
+                            <option value="GLTF">GLTF</option>
+                            <option value="FBX">FBX</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- File Button -->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="id_mtl_file">Upload the texture file (for obj type objects only!!)</label>
+                      <div class="col-md-4">
+                        <input id="id_mtl_file" name="mtl_file" class="input-file" type="file">
+                      </div>
+                    </div>
+
+                    <!-- Scale values-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">Scale values</label>
+                      <div class="col-md-4">
+                          <div class="col-md-3">
+                                <input name="scale_x" type="text" placeholder="x" class="form-control input-md">
+                          </div>
+                          <div class="col-md-3">
+                                <input name="scale_y" type="text" placeholder="y" class="form-control input-md">
+                          </div>
+                          <div class="col-md-3">
+                                <input name="scale_z" type="text" placeholder="z" class="form-control input-md">
+                          </div>
+                        <span class="help-block">help text here</span>
+                      </div>
+                    </div>
+
+                    <!-- Rotation values-->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" >Rotation values</label>
+                      <div class="col-md-4">
+                          <div class="col-md-3">
+                                <input name="rot_x" type="text" placeholder="x" class="form-control input-md">
+                          </div>
+                          <div class="col-md-3">
+                                <input name="rot_y" type="text" placeholder="y" class="form-control input-md">
+                          </div>
+                          <div class="col-md-3">
+                                <input name="rot_z" type="text" placeholder="z" class="form-control input-md">
+                          </div>
+                        <span class="help-block">help text here</span>
+                      </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                      <label class="col-md-4 control-label" for="add_object_button"></label>
+                      <div class="col-md-4">
+                        <button id="add_object_button" name="file" class="btn btn-primary" type="submit" formmethod="post" >Submit</button>
+                      </div>
+                    </div>
+
+                    </fieldset>
+                </form>
               </div>
-            </div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="add_object_button"></label>
-              <div class="col-md-4">
-                <button id="add_scene_button" name="add_scene_button" class="btn btn-primary" type="submit" formmethod="post">Submit</button>
+                <div id="add_image_form" style="margin-top: 40px">
+                    <form class="form-horizontal" action="upload_image/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset>
+
+                        <!-- Form Name -->
+                            <legend><b>Upload an image target to a scene's list</b></legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="id_object_name">A unique name for the image target</label>
+                          <div class="col-md-4">
+                          <input id="id_image_target_name" name="image_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_image_target_name">
+                          <span class="help-block">help text here</span>
+                          </div>
+                        </div>
+
+                        <!-- Select Basic -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="id_chosen_scene">Choose the scene</label>
+                          <div class="col-md-4">
+                            <select id="id_chosen_scene_2" name="chosen_scene" class="form-control">
+                                {% for s in scenes_list %}
+                                    <option value="{{s}}">{{s}}</option>
+                                {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- File Button -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="id_file">Upload Image target</label>
+                          <div class="col-md-4">
+                            <input id="id_file_2" name="file" class="input-file" type="file" required id="id_file_2">
+                          </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="add_image_button"></label>
+                          <div class="col-md-4">
+                            <button id="add_image_button" name="file" class="btn btn-primary" type="submit" formmethod="post" >Submit</button>
+                          </div>
+                        </div>
+
+                        </fieldset>
+                    </form>
               </div>
-            </div>
-
-            </fieldset>
-        </form>
-     </div>
-
-  <div id="add_object_form">
-    <form class="form-horizontal" action="add_ar_object/" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset>
-
-        <!-- Form Name -->
-        <legend>Upload an AR object to scene's list</legend>
-
-        <!-- Text input-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="id_object_name">A unique name for the AR object</label>
-          <div class="col-md-4">
-          <input id="id_object_name" name="object_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_object_name">
-          <span class="help-block">help text here</span>
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="id_chosen_scene">Choose the scene</label>
-          <div class="col-md-4">
-            <select id="id_chosen_scene" name="chosen_scene" class="form-control">
-                {% for s in scenes_list %}
-                    <option value="{{s}}">{{s}}</option>
-                {% endfor %}
-            </select>
-          </div>
-        </div>
-
-        <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="id_file">Upload AR object</label>
-          <div class="col-md-4">
-            <input id="id_file" name="file" class="input-file" type="file" required id="id_file">
-          </div>
-        </div>
-
-        <!-- Select Basic -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="id_chosen_scene">Object type</label>
-          <div class="col-md-4">
-            <select id="id_object_type" name="object_type" class="form-control">
-                <option value="OBJ">OBJ</option>
-                <option value="GLB">GLB</option>
-                <option value="GLTF">GLTF</option>
-                <option value="FBX">FBX</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="id_mtl_file">Upload the texture file (for obj type objects only!!)</label>
-          <div class="col-md-4">
-            <input id="id_mtl_file" name="mtl_file" class="input-file" type="file">
-          </div>
-        </div>
-
-        <!-- Scale values-->
-        <div class="form-group">
-          <label class="col-md-4 control-label">Scale values</label>
-          <div class="col-md-4">
-              <div class="col-md-3">
-                    <input name="scale_x" type="text" placeholder="x" class="form-control input-md">
-              </div>
-              <div class="col-md-3">
-                    <input name="scale_y" type="text" placeholder="y" class="form-control input-md">
-              </div>
-              <div class="col-md-3">
-                    <input name="scale_z" type="text" placeholder="z" class="form-control input-md">
-              </div>
-            <span class="help-block">help text here</span>
-          </div>
-        </div>
-
-        <!-- Rotation values-->
-        <div class="form-group">
-          <label class="col-md-4 control-label" >Rotation values</label>
-          <div class="col-md-4">
-              <div class="col-md-3">
-                    <input name="rot_x" type="text" placeholder="x" class="form-control input-md">
-              </div>
-              <div class="col-md-3">
-                    <input name="rot_y" type="text" placeholder="y" class="form-control input-md">
-              </div>
-              <div class="col-md-3">
-                    <input name="rot_z" type="text" placeholder="z" class="form-control input-md">
-              </div>
-            <span class="help-block">help text here</span>
-          </div>
-        </div>
-
-        <!-- Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="add_object_button"></label>
-          <div class="col-md-4">
-            <button id="add_object_button" name="file" class="btn btn-primary" type="submit" formmethod="post" >Submit</button>
-          </div>
-        </div>
-
-        </fieldset>
-    </form>
-  </div>
-
-    <div id="add_image_form">
-        <form class="form-horizontal" action="upload_image/" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset>
-
-            <!-- Form Name -->
-            <legend>Upload an image target to a scene's list</legend>
-
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="id_object_name">A unique name for the image target</label>
-              <div class="col-md-4">
-              <input id="id_image_target_name" name="image_name" type="text" placeholder="placeholder" class="form-control input-md" required id="id_image_target_name">
-              <span class="help-block">help text here</span>
-              </div>
-            </div>
-
-            <!-- Select Basic -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="id_chosen_scene">Choose the scene</label>
-              <div class="col-md-4">
-                <select id="id_chosen_scene_2" name="chosen_scene" class="form-control">
-                    {% for s in scenes_list %}
-                        <option value="{{s}}">{{s}}</option>
-                    {% endfor %}
-                </select>
-              </div>
-            </div>
-
-            <!-- File Button -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="id_file">Upload Image target</label>
-              <div class="col-md-4">
-                <input id="id_file_2" name="file" class="input-file" type="file" required id="id_file_2">
-              </div>
-            </div>
-
-            <!-- Button -->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="add_image_button"></label>
-              <div class="col-md-4">
-                <button id="add_image_button" name="file" class="btn btn-primary" type="submit" formmethod="post" >Submit</button>
-              </div>
-            </div>
-
-            </fieldset>
-        </form>
-  </div>
+    </div>
 </body>
 </html>
