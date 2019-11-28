@@ -54,9 +54,9 @@ def add_ar_object(request):
                 mtl_file = upload_file("/ar_objects/", request)
             except:
                 mtl_file = None
-            scale_x = getOrDefault(request.POST.get('scale_x'), 1.0)
-            scale_y = getOrDefault(request.POST.get('scale_y'), 1.0)
-            scale_z = getOrDefault(request.POST.get('scale_z'), 1.0)
+            scale_x = getOrDefault(request.POST.get('scale_x'), 0.5)
+            scale_y = getOrDefault(request.POST.get('scale_y'), 0.5)
+            scale_z = getOrDefault(request.POST.get('scale_z'), 0.5)
             rot_x = getOrDefault(request.POST.get('rot_x'), 0.0)
             rot_y = getOrDefault(request.POST.get('rot_y'), 0.0)
             rot_z = getOrDefault(request.POST.get('rot_z'), 0.0)

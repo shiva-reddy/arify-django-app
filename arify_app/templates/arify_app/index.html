@@ -11,10 +11,11 @@
 </head>
 <body>
 
-    <div style="margin-left: 100px">
+    <div style="margin-left: 50px; margin-right: 50px">
+        <div class="container">
         </br>
         </br>
-                <div id="add_scene_form" style="margin-top: 40px">
+                <div id="add_scene_form" class="row" style="margin-top: 40px">
 
                     <form class="form-horizontal" action="add_scene/" method="post">
                         {% csrf_token %}
@@ -44,7 +45,7 @@
                     </form>
                  </div>
 
-              <div id="add_object_form" style="margin-top: 40px">
+              <div id="add_object_form" class="row" style="margin-top: 40px">
                 <form class="form-horizontal" action="add_ar_object/" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset>
@@ -148,7 +149,7 @@
                 </form>
               </div>
 
-                <div id="add_image_form" style="margin-top: 40px">
+                <div id="add_image_form" class="row" style="margin-top: 40px">
                     <form class="form-horizontal" action="upload_image/" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset>
@@ -196,6 +197,7 @@
                         </fieldset>
                     </form>
               </div>
+        </div>
     </div>
 </body>
 </html>
