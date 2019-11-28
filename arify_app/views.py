@@ -151,7 +151,7 @@ def link_json(link):
                  "scale_x" : link.ar_object.scale_x,
                  "scale_y": link.ar_object.scale_y,
                  "model_type": link.ar_object.model_type,
-                 "mtl_link": link.mtl_link,
+                 "mtl_link": link.ar_object.mtl_link,
                  "scale_z": link.ar_object.scale_z,
                  "rot_x": link.ar_object.rot_x,
                  "rot_y": link.ar_object.rot_y,
