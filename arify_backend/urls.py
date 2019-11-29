@@ -18,7 +18,7 @@ from django.urls import path
 
 from arify_app import views
 from arify_app.views import scenes_list, scene_links, link_image_with_ar_object, list_ar_objects, \
-    list_image_targets, upload_image_ui, upload_image_api, update_ar_object_api
+    list_image_targets, upload_image_ui, upload_image_api, update_ar_object_api, add_scene_api
 
 urlpatterns = [
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path("scenes/<str:pk>/list_ar_objects", list_ar_objects, name="list_ar_objects"),
     path("scenes/<str:pk>/upload_image", upload_image_api, name="upload_image_api"),
     path("scenes/<str:pk>/update_ar_object", update_ar_object_api, name="update_ar_object_api"),
+    path("scenes/create_new", add_scene_api, name="add_scene_api"),
     path("upload_image/", upload_image_ui, name="upload_image"),
     path("scenes/<str:pk>/link_image_with_ar_object", link_image_with_ar_object, name="link_image_with_ar_object"),
     path('add_ar_object/', views.add_ar_object, name='add_ar_object'),

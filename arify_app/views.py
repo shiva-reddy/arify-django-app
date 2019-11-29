@@ -24,6 +24,7 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 def add_scene(request):
     if request.method == "POST":
         scene_name = request.POST.get('scene_name')
@@ -31,6 +32,15 @@ def add_scene(request):
         if scene_name not in used_scene_names:
             Scene.add_scene(scene_name)
     return HttpResponseRedirect("/")
+
+@csrf_exempt
+def add_scene_api(request):
+    if request.method == "POST":
+        scene_name = request.POST.get('scene_name')
+        used_scene_names = list(map(lambda s : s.name, Scene.objects.all()))
+        if scene_name not in used_scene_names:
+            Scene.add_scene(scene_name)
+    return success()
 
 def download_file(uploaded_file):
     fd = open("uploads/" + str(uploaded_file.name), 'wb')
@@ -119,6 +129,7 @@ def update_ar_object_api(request, pk):
     pos_z = request.POST.get('pos_offset_z', 0.0)
     update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z)
     return success()
+
 
 def update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z):
     ar_object.rot_x = rot_x
