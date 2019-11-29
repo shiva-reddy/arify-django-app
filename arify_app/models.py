@@ -20,6 +20,9 @@ class Ar_object(models.Model):
     scale_x = models.DecimalField(decimal_places=2, max_digits= 3, default=1.0)
     scale_y = models.DecimalField(decimal_places=2, max_digits= 3, default=1.0)
     scale_z = models.DecimalField(decimal_places=2, max_digits= 3, default=1.0)
+    pos_offset_x = models.DecimalField(decimal_places=2, max_digits=3, default=0.0)
+    pos_offset_y = models.DecimalField(decimal_places=2, max_digits=3, default=0.0)
+    pos_offset_z = models.DecimalField(decimal_places=2, max_digits=3, default=0.0)
     rot_x = models.DecimalField(decimal_places=2, max_digits= 3, default=0.0)
     rot_y = models.DecimalField(decimal_places=2, max_digits= 3, default=0.0)
     rot_z = models.DecimalField(decimal_places=2, max_digits= 3, default=0.0)
@@ -28,7 +31,7 @@ class Ar_object(models.Model):
         return self.name
 
     def add_object(chosen_scene, object_name, file_link, _mtl_link, _model_type, _scale_x, _scale_y, _scale_z, _rot_x,
-                   _rot_y, _rot_z):
+                   _rot_y, _rot_z, _pos_offset_x, _pos_offset_y, _pos_offset_z):
         _scene = Scene.objects.filter(name=chosen_scene).last()
         obj = Ar_object(scene = _scene,
                         name= object_name,
@@ -40,7 +43,10 @@ class Ar_object(models.Model):
                         scale_z = _scale_z,
                         rot_x = _rot_x,
                         rot_y=_rot_y,
-                        rot_z=_rot_z)
+                        rot_z=_rot_z,
+                        pos_offset_x = _pos_offset_x,
+                        pos_offset_y=_pos_offset_y,
+                        pos_offset_z=_pos_offset_z)
         obj.save()
 
 class Image_target(models.Model):

@@ -60,8 +60,11 @@ def add_ar_object(request):
             rot_x = getOrDefault(request.POST.get('rot_x'), 0.0)
             rot_y = getOrDefault(request.POST.get('rot_y'), 0.0)
             rot_z = getOrDefault(request.POST.get('rot_z'), 0.0)
+            pos_offset_x = getOrDefault(request.POST.get('pos_offset_x'), 0.0)
+            pos_offset_y = getOrDefault(request.POST.get('pos_offset_y'), 0.0)
+            pos_offset_z = getOrDefault(request.POST.get('pos_offset_z'), 0.0)
 
-            Ar_object.add_object(chosen_scene, object_name, file_link,mtl_file,obj_type, scale_x, scale_y, scale_z, rot_x, rot_y, rot_z)
+            Ar_object.add_object(chosen_scene, object_name, file_link,mtl_file,obj_type, scale_x, scale_y, scale_z, rot_x, rot_y, rot_z, pos_offset_x, pos_offset_y, pos_offset_z)
     return HttpResponseRedirect("/")
 
 def getOrDefault(value, defValue):
@@ -104,7 +107,7 @@ def upload_image(request, _name, _scene_name):
 def upload_image_api(request, pk):
     _name = request.POST.get('image_name')
     _scene = Scene.objects.filter(name=pk)
-    if len(_scene) == 0:
+    if _scene.count() == 0:
         return error_json("Scene is not present")
     upload_image(request, _name, _scene[0])
     return success()
@@ -154,7 +157,9 @@ def link_json(link):
                  "mtl_link": link.ar_object.mtl_link,
                  "scale_z": link.ar_object.scale_z,
                  "rot_x": link.ar_object.rot_x,
-                 "rot_y": link.ar_object.rot_y,
                  "rot_z": link.ar_object.rot_z,
+                 "pos_offset_x": link.ar_object.pos_offset_x,
+                 "pos_offset_y": link.ar_object.pos_offset_y,
+                 "pos_offset_z": link.ar_object.pos_offset_z
                  }
     return {"image_target": image_target, "ar_object": ar_object}
