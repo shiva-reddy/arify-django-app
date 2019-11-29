@@ -58,7 +58,7 @@ def add_ar_object(request):
             scale_y = getOrDefault(request.POST.get('scale_y'), 0.5)
             scale_z = getOrDefault(request.POST.get('scale_z'), 0.5)
             rot_x = getOrDefault(request.POST.get('rot_x'), 0.0)
-            rot_y = getOrDefault(request.POST.get('rot_y'), 0.0)
+            rot_y = 0.0
             rot_z = getOrDefault(request.POST.get('rot_z'), 0.0)
             pos_offset_x = getOrDefault(request.POST.get('pos_offset_x'), 0.0)
             pos_offset_y = getOrDefault(request.POST.get('pos_offset_y'), 0.0)
