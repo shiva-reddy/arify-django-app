@@ -40,7 +40,6 @@ def download_file(uploaded_file):
     print("Saved file at " + fd.name)
     return fd.name
 
-
 def add_ar_object(request):
     if request.method == "POST":
         chosen_scene = request.POST.get('chosen_scene')
@@ -101,6 +100,34 @@ def upload_image(request, _name, _scene_name):
     file_link = upload_file("/image_targets/", request, 'file')
     image_target = Image_target(name = _name, scene=_scene, link=file_link)
     image_target.save()
+
+def update_ar_object_api(request, pk):
+    _name = request.POST.get('ar_object_name')
+    _scene = Scene.objects.filter(name=pk)
+    if _scene.count() == 0:
+        return error_json("Scene is not present")
+    ar_object = Ar_object.objects.filter(name=_name, scene =_scene)
+    scale_x = request.POST.get('scale_x', 0.5)
+    scale_y = request.POST.get('scale_y', 0.5)
+    scale_z = request.POST.get('scale_z', 0.5)
+    rot_x = request.POST.get('rot_x', 0.0)
+    rot_z = request.POST.get('rot_z', 0.0)
+    pos_x = request.POST.get('pos_offset_x', 0.0)
+    pos_y = request.POST.get('pos_offset_y', 0.0)
+    pos_z = request.POST.get('pos_offset_z', 0.0)
+    update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z)
+
+
+def update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z):
+    ar_object.rot_x = rot_x
+    ar_object.rot_z = rot_z
+    ar_object.scale_x = scale_x
+    ar_object.scale_y = scale_y
+    ar_object.scale_z = scale_z
+    ar_object.pos_offset_x = pos_x
+    ar_object.pos_offset_y = pos_y
+    ar_object.pos_offset_z = pos_z
+    ar_object.save()
 
 
 @csrf_exempt
