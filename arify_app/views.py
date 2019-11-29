@@ -101,12 +101,14 @@ def upload_image(request, _name, _scene_name):
     image_target = Image_target(name = _name, scene=_scene, link=file_link)
     image_target.save()
 
+
+@csrf_exempt
 def update_ar_object_api(request, pk):
     _name = request.POST.get('ar_object_name')
     _scene = Scene.objects.filter(name=pk)
     if _scene.count() == 0:
         return error_json("Scene is not present")
-    ar_object = Ar_object.objects.filter(name=_name, scene =_scene)
+    ar_object = Ar_object.objects.filter(name=_name, scene = _scene[0])[0]
     scale_x = request.POST.get('scale_x', 0.5)
     scale_y = request.POST.get('scale_y', 0.5)
     scale_z = request.POST.get('scale_z', 0.5)
@@ -116,7 +118,7 @@ def update_ar_object_api(request, pk):
     pos_y = request.POST.get('pos_offset_y', 0.0)
     pos_z = request.POST.get('pos_offset_z', 0.0)
     update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z)
-
+    return success()
 
 def update_ar_object(ar_object, scale_x, scale_y, scale_z, rot_x, rot_z, pos_x, pos_y, pos_z):
     ar_object.rot_x = rot_x
