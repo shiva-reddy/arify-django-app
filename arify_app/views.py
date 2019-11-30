@@ -55,7 +55,6 @@ def add_scene_api(request):
         scene_name = request.POST.get('scene_name')
         used_scene_names = list(map(lambda s : s.name, Scene.objects.all()))
         if scene_name not in used_scene_names:
-            Scene.add_scene(scene_name)
             s = Scene.add_scene(scene_name)
             l = Ar_object.objects.filter(scene__name='global')
             if l.count() > 0:
