@@ -1,3 +1,4 @@
 .DS_Store
 arify_app/__pycache__/*
-*/*.pyc
+**/*.pyc
+db.sqlite3
