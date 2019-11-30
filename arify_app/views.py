@@ -31,20 +31,22 @@ def add_scene(request):
         used_scene_names = list(map(lambda s : s.name, Scene.objects.all()))
         if scene_name not in used_scene_names:
             s = Scene.add_scene(scene_name)
-            for ar_object in Ar_object.objects.filter(scene__name='global'):
-                new_ar_object = Ar_object()
-                new_ar_object.scene = s
-                new_ar_object.name = ar_object.name
-                new_ar_object.pos_offset_x = ar_object.pos_offset_x
-                new_ar_object.pos_offset_y = ar_object.pos_offset_y
-                new_ar_object.pos_offset_z = ar_object.pos_offset_z
-                new_ar_object.rot_x = ar_object.rot_x
-                new_ar_object.rot_y = ar_object.rot_y
-                new_ar_object.rot_z = ar_object.rot_z
-                new_ar_object.link = ar_object.link
-                new_ar_object.mtl_link = ar_object.mtl_link
-                new_ar_object.model_type = ar_object.model_type
-                new_ar_object.save()
+            l = Ar_object.objects.filter(scene__name='global')
+            if l.count() > 0:
+                for ar_object in Ar_object.objects.filter(scene__name='global'):
+                    new_ar_object = Ar_object()
+                    new_ar_object.scene = s
+                    new_ar_object.name = ar_object.name
+                    new_ar_object.pos_offset_x = ar_object.pos_offset_x
+                    new_ar_object.pos_offset_y = ar_object.pos_offset_y
+                    new_ar_object.pos_offset_z = ar_object.pos_offset_z
+                    new_ar_object.rot_x = ar_object.rot_x
+                    new_ar_object.rot_y = ar_object.rot_y
+                    new_ar_object.rot_z = ar_object.rot_z
+                    new_ar_object.link = ar_object.link
+                    new_ar_object.mtl_link = ar_object.mtl_link
+                    new_ar_object.model_type = ar_object.model_type
+                    new_ar_object.save()
     return HttpResponseRedirect("/")
 
 @csrf_exempt
