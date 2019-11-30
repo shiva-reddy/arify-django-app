@@ -10,6 +10,7 @@ class Scene(models.Model):
     def add_scene(scene_name):
         s = Scene(name=scene_name)
         s.save()
+        return s
 
 class Ar_object(models.Model):
     scene = models.ForeignKey(Scene, on_delete=models.CASCADE)
